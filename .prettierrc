@@ -3,14 +3,10 @@
   "singleQuote": true,
   "tailwindConfig": "./tailwind.config.js",
   "trailingComma": "all",
-  "plugins": [
-    "./node_modules/prettier-plugin-blade/"
-  ],
+  "plugins": ["./node_modules/prettier-plugin-blade/"],
   "overrides": [
     {
-      "files": [
-        "*.blade.php"
-      ],
+      "files": ["*.blade.php"],
       "options": {
         "parser": "blade"
       }

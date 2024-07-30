@@ -1,4 +1,4 @@
-name: "Build Assets"
+name: 'Build Assets'
 
 on:
   pull_request:
@@ -33,4 +33,4 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Chore: build assets"
+          commit_message: 'Chore: build assets'

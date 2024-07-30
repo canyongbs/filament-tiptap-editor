@@ -1,4 +1,4 @@
-name: "Fix PHP code styling"
+name: 'Fix PHP code styling'
 
 on:
   pull_request:
@@ -25,4 +25,4 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Chore: Fix PHP code styling"
+          commit_message: 'Chore: Fix PHP code styling'
