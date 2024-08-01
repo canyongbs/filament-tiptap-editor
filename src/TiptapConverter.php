@@ -223,7 +223,7 @@ class TiptapConverter
                 return;
             }
 
-            $id = $node->attrs?->id;
+            $id = $node->attrs?->id ?? null;
 
             if (blank($id)) {
                 return;
@@ -366,7 +366,7 @@ class TiptapConverter
                 return;
             }
 
-            $id = $node->attrs?->id;
+            $id = $node->attrs?->id ?? null;
 
             if (blank($id)) {
                 return;
