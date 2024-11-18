@@ -40,40 +40,50 @@ class LinkAction extends Action
                     ->schema([
                         TextInput::make('href')
                             ->label(trans('filament-tiptap-editor::link-modal.labels.url'))
+                            ->placeholder('https://example.com')
+                            ->dehydrateStateUsing(function (?string $state): string {
+                                if (str($state)->startsWith(['http://', 'https://'])) {
+                                    return $state;
+                                }
+
+                                return "https://{$state}";
+                            })
                             ->columnSpan('full')
-                            ->requiredWithout('id')
+                            ->required()
+                            // ->requiredWithout('id')
                             ->validationAttribute('URL'),
-                        TextInput::make('id'),
+                        // TextInput::make('id'),
                         Select::make('target')
-                            ->selectablePlaceholder(false)
+                            ->label('Open in new tab')
+                            ->placeholder('No')
                             ->options([
-                                '' => trans('filament-tiptap-editor::link-modal.labels.target.default'),
-                                '_blank' => trans('filament-tiptap-editor::link-modal.labels.target.new_window'),
-                                '_parent' => trans('filament-tiptap-editor::link-modal.labels.target.parent'),
-                                '_top' => trans('filament-tiptap-editor::link-modal.labels.target.top'),
+                                // '' => trans('filament-tiptap-editor::link-modal.labels.target.default'),
+                                '_blank' => 'Yes',
+                                // '_parent' => trans('filament-tiptap-editor::link-modal.labels.target.parent'),
+                                // '_top' => trans('filament-tiptap-editor::link-modal.labels.target.top'),
                             ]),
-                        TextInput::make('hreflang')
-                            ->label(trans('filament-tiptap-editor::link-modal.labels.language')),
-                        TextInput::make('rel')
-                            ->columnSpan('full'),
-                        TextInput::make('referrerpolicy')
-                            ->label(trans('filament-tiptap-editor::link-modal.labels.referrer_policy'))
-                            ->columnSpan('full'),
-                        Toggle::make('as_button')
-                            ->label(trans('filament-tiptap-editor::link-modal.labels.as_button'))
-                            ->reactive()
-                            ->hidden(config('filament-tiptap-editor.disable_link_as_button'))
-                            ->dehydratedWhenHidden(),
-                        Radio::make('button_theme')
-                            ->columnSpan('full')
-                            ->columns(2)
-                            ->visible(fn ($get) => $get('as_button'))
-                            ->options([
-                                'primary' => trans('filament-tiptap-editor::link-modal.labels.button_theme.primary'),
-                                'secondary' => trans('filament-tiptap-editor::link-modal.labels.button_theme.secondary'),
-                                'tertiary' => trans('filament-tiptap-editor::link-modal.labels.button_theme.tertiary'),
-                                'accent' => trans('filament-tiptap-editor::link-modal.labels.button_theme.accent'),
-                            ]),
+                        // TextInput::make('hreflang')
+                        //     ->label(trans('filament-tiptap-editor::link-modal.labels.language')),
+                        // TextInput::make('rel')
+                        //     ->columnSpan('full'),
+                        // TextInput::make('referrerpolicy')
+                        //     ->label(trans('filament-tiptap-editor::link-modal.labels.referrer_policy'))
+                        //     ->columnSpan('full'),
+                        // Toggle::make('as_button')
+                        //     ->label(trans('filament-tiptap-editor::link-modal.labels.as_button'))
+                        //     ->reactive()
+                        //     ->hidden(config('filament-tiptap-editor.disable_link_as_button'))
+                        //     ->dehydratedWhenHidden(),
+                        // Radio::make('button_theme')
+                        //     ->columnSpan('full')
+                        //     ->columns(2)
+                        //     ->visible(fn ($get) => $get('as_button'))
+                        //     ->options([
+                        //         'primary' => trans('filament-tiptap-editor::link-modal.labels.button_theme.primary'),
+                        //         'secondary' => trans('filament-tiptap-editor::link-modal.labels.button_theme.secondary'),
+                        //         'tertiary' => trans('filament-tiptap-editor::link-modal.labels.button_theme.tertiary'),
+                        //         'accent' => trans('filament-tiptap-editor::link-modal.labels.button_theme.accent'),
+                        //     ]),
                     ]),
             ])->action(function (TiptapEditor $component, $data) {
                 $component->getLivewire()->dispatch(
@@ -81,13 +91,13 @@ class LinkAction extends Action
                     type: 'link',
                     statePath: $component->getStatePath(),
                     href: $data['href'],
-                    id: $data['id'],
-                    hreflang: $data['hreflang'],
-                    target: $data['target'],
-                    rel: $data['rel'],
-                    referrerpolicy: $data['referrerpolicy'],
-                    as_button: $data['as_button'],
-                    button_theme: $data['as_button'] ? $data['button_theme'] : '',
+                    id: $data['id'] ?? null,
+                    hreflang: $data['hreflang'] ?? null,
+                    target: $data['target'] ?? null,
+                    rel: $data['rel'] ?? null,
+                    referrerpolicy: $data['referrerpolicy'] ?? null,
+                    as_button: $data['as_button'] ?? false,
+                    button_theme: ($data['as_button'] ?? false) ? ($data['button_theme'] ?? null) : '',
                 );
 
                 $component->state($component->getState());
