@@ -80,21 +80,21 @@ export const MergeTag = Node.create({
         return {
             insertMergeTag:
                 (attributes) =>
-                ({ chain, state }) => {
-                    const currentChain = chain();
+                    ({ chain, state }) => {
+                        const currentChain = chain();
 
-                    if (![null, undefined].includes(attributes.coordinates?.pos)) {
-                        currentChain.insertContentAt(
-                            { from: attributes.coordinates.pos, to: attributes.coordinates.pos },
-                            [
-                                { type: this.name, attrs: { id: attributes.tag } },
-                                { type: 'text', text: ' ' },
-                            ],
-                        );
+                        if (![null, undefined].includes(attributes.coordinates?.pos)) {
+                            currentChain.insertContentAt(
+                                { from: attributes.coordinates.pos, to: attributes.coordinates.pos },
+                                [
+                                    { type: this.name, attrs: { id: attributes.tag } },
+                                    { type: 'text', text: ' ' },
+                                ],
+                            );
 
-                        return currentChain;
-                    }
-                },
+                            return currentChain;
+                        }
+                    },
         };
     },
 
@@ -103,10 +103,8 @@ export const MergeTag = Node.create({
             Suggestion({
                 editor: this.editor,
                 char: '{{',
-                items: ({ query }) =>
-                    this.options.mergeTags
-                        .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
-                        .slice(0, 5),
+                items: ({ query }) => JSON.parse(JSON.stringify(this.options.mergeTags
+                    .filter((item) => item.toLowerCase().replace(' ', '').includes(query.toLowerCase().replace(' ', ''))))),
                 pluginKey: MergeTagPluginKey,
                 command: ({ editor, range, props }) => {
                     const nodeAfter = editor.view.state.selection.$to.nodeAfter;
@@ -166,7 +164,7 @@ export const MergeTag = Node.create({
 
                                             this.$el.parentElement.addEventListener(
                                                 'merge-tags-update-items',
-                                                (event) => (items = event.detail),
+                                                (event) => this.items = event.detail,
                                             );
                                         },
 
@@ -208,7 +206,7 @@ export const MergeTag = Node.create({
                                     }"
                                     class="tippy-content-p-0"
                                 >
-                                    <template x-for="(item, index) in items" :key="index">
+                                    <template x-for="(item, index) in items" :key="item">
                                         <button
                                             x-text="item"
                                             x-on:click="selectItem(index)"
