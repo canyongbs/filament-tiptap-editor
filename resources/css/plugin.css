@@ -244,6 +244,14 @@
         font-size: 1.125rem;
     }
 
+    h5 {
+        font-size: 1rem;
+    }
+
+    h6 {
+        font-size: 0.83rem;
+    }
+
     .lead {
         font-size: 1.375rem;
         line-height: 1.3;
