@@ -227,27 +227,27 @@
     }
 
     h1 {
-        font-size: 1.875rem;
+        @apply text-3xl;
     }
 
     h2 {
-        font-size: 1.5rem;
+        @apply text-2xl;
     }
 
     h3 {
-        font-size: 1.25rem;
+        @apply text-xl;
     }
 
     h4 {
-        font-size: 1.125rem;
+        @apply text-lg;
     }
 
     h5 {
-        font-size: 1rem;
+        @apply text-base;
     }
 
     h6 {
-        font-size: 0.87rem;
+        @apply text-sm;
     }
 
     h3,h4{
