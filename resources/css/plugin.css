@@ -216,13 +216,11 @@
         display: inline-block;
     }
 
-    h1,h2,h3,h4,h5,h6 {
-        @apply mt-4 mb-4;
-        @apply leading-[1.5];
+    h1, h2, h3, h4, h5, h6 {
+        @apply my-4;
     }
 
-    h1,
-    h2{
+    h1, h2{
         font-weight: bold;
     }
 
@@ -250,11 +248,11 @@
         @apply text-sm;
     }
 
-    h3,h4{
+    h3, h4{
         @apply font-semibold;
     }
 
-    h5,h6{
+    h5, h6{
         @apply font-medium;
     }
 
