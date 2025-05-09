@@ -3,12 +3,12 @@ import Link from '@tiptap/extension-link';
 export const CustomLink = Link.extend({
     addOptions() {
         return {
+            ...this.parent?.(),
             openOnClick: true,
             linkOnPaste: true,
             autolink: true,
             protocols: [],
             HTMLAttributes: {},
-            validate: undefined,
         };
     },
 
