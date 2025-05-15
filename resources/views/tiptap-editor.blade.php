@@ -30,14 +30,14 @@
                 }"
                 x-on:tiptap-uploading-file.stop="if ($event.detail.statePath === @js($statePath)) isUploadingFile = true"
                 x-on:tiptap-uploaded-file.stop="if ($event.detail.statePath === @js($statePath)) isUploadingFile = false"
-                @if (!$shouldDisableStylesheet()) x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('tiptap', 'awcodes/tiptap-editor'))]" @endif
+                @if (!$shouldDisableStylesheet()) x-load-css="[@js(\Filament\Support\Facades\FilamentAsset::getStyleHref('tiptap', 'canyongbs/filament-tiptap-editor'))]" @endif
             >
                 <div
                     class="tiptap-wrapper relative z-0 rounded-md bg-white focus-within:z-10 focus-within:ring focus-within:ring-primary-500 dark:bg-gray-900"
                     wire:ignore
                     x-ignore
                     ax-load="visible"
-                    ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('tiptap', 'awcodes/tiptap-editor') }}"
+                    ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('tiptap', 'canyongbs/filament-tiptap-editor') }}"
                     x-bind:class="{ 'tiptap-fullscreen': fullScreenMode }"
                     x-data="tiptap({
                         state: $wire.{{ $applyStateBindingModifiers("entangle('{$statePath}')", isOptimisticallyLive: true) }},
