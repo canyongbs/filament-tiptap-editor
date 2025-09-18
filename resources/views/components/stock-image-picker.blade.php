@@ -59,8 +59,8 @@
                     this.currentPage = data.current_page || 1;
                     this.lastPage = data.last_page || 1;
                     this.total = data.total || 0;
-                } catch (err) {
-                    this.error = err.message;
+                } catch (error) {
+                    this.error = error.message;
                 } finally {
                     this.loading = false;
                 }
@@ -87,19 +87,16 @@
         }"
         class="space-y-4"
     >
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-            </div>
-            <input
-                type="text"
+        <x-filament::input.wrapper
+            inline-prefix
+            prefix-icon="heroicon-m-magnifying-glass"
+        >
+            <x-filament::input
+                type="search"
                 x-model="query"
                 placeholder="Search stock images..."
-                class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:placeholder-gray-400 dark:focus:placeholder-gray-500 focus:ring-1 focus:ring-primary-500 focus:border-primary-500 text-sm"
-            >
-        </div>
+            />
+        </x-filament::input.wrapper>
 
         <div x-show="loading" class="flex justify-center py-8">
             <x-filament::loading-indicator class="h-8 w-8 text-gray-500 dark:text-gray-400" />
@@ -108,9 +105,7 @@
         <div x-show="error" class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
             <div class="flex">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-red-400 dark:text-red-300" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                    </svg>
+                    @svg('heroicon-m-exclamation-circle', 'h-5 w-5 text-red-400 dark:text-red-300')
                 </div>
                 <div class="ml-3">
                     <p class="text-sm text-red-700 dark:text-red-300" x-text="error"></p>
@@ -123,17 +118,13 @@
         </div>
 
         <div x-show="!loading && !error && images.length === 0 && !query.trim()" class="text-center py-12">
-            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            @svg('heroicon-o-photo', 'mx-auto h-12 w-12 text-gray-400 dark:text-gray-500')
             <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">Search for stock images</h3>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Enter a search term above to find images.</p>
         </div>
 
         <div x-show="!loading && !error && images.length === 0 && query.trim()" class="text-center py-12">
-            <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+            @svg('heroicon-o-photo', 'mx-auto h-12 w-12 text-gray-400 dark:text-gray-500')
             <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No images found</h3>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Try adjusting your search terms.</p>
         </div>
@@ -160,9 +151,7 @@
                         x-show="isSelected(image)"
                         class="absolute top-2 right-2 w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center"
                     >
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                        </svg>
+                        @svg('heroicon-m-check', 'w-4 h-4 text-white')
                     </div>
                     
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -184,9 +173,8 @@
                     }"
                     class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200 flex items-center"
                 >
-                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
+                    @svg('heroicon-c-chevron-left', 'w-3 h-3 mr-1')
+
                     Previous
                 </button>
 
@@ -219,9 +207,8 @@
                     class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200 flex items-center"
                 >
                     Next
-                    <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
+                    
+                    @svg('heroicon-c-chevron-right', 'w-3 h-3 mr-1')
                 </button>
             </div>
 
@@ -247,9 +234,7 @@
                     type="button"
                     class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200"
                 >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    @svg('heroicon-m-x-mark', 'w-5 h-5')
                 </button>
             </div>
         </div>
