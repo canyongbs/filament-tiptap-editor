@@ -18,6 +18,7 @@
             init() {
                 this.$watch('query', () => {
                     clearTimeout(this.searchTimeout);
+
                     this.searchTimeout = setTimeout(() => {
                         this.currentPage = 1;
                         this.loadImages();
@@ -31,6 +32,7 @@
                     this.currentPage = 1;
                     this.lastPage = 1;
                     this.total = 0;
+
                     return;
                 }
                 
@@ -42,10 +44,9 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.getAttribute('content')
                         },
                         body: JSON.stringify({
-                            query: this.query,
+                            search: this.query,
                             page: this.currentPage
                         })
                     });
@@ -102,13 +103,14 @@
             <x-filament::loading-indicator class="h-8 w-8 text-gray-500 dark:text-gray-400" />
         </div>
 
-        <div x-show="error" class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
+        <div x-show="error" class="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-md p-4">
             <div class="flex">
                 <div class="flex-shrink-0">
-                    @svg('heroicon-m-exclamation-circle', 'h-5 w-5 text-red-400 dark:text-red-300')
+                    @svg('heroicon-m-exclamation-circle', 'h-5 w-5 text-danger-400 dark:text-danger-300')
                 </div>
+
                 <div class="ml-3">
-                    <p class="text-sm text-red-700 dark:text-red-300" x-text="error"></p>
+                    <p class="text-sm text-danger-700 dark:text-danger-200" x-text="error"></p>
                 </div>
             </div>
         </div>
@@ -119,13 +121,17 @@
 
         <div x-show="!loading && !error && images.length === 0 && !query.trim()" class="text-center py-12">
             @svg('heroicon-o-photo', 'mx-auto h-12 w-12 text-gray-400 dark:text-gray-500')
+
             <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">Search for stock images</h3>
+
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Enter a search term above to find images.</p>
         </div>
 
         <div x-show="!loading && !error && images.length === 0 && query.trim()" class="text-center py-12">
             @svg('heroicon-o-photo', 'mx-auto h-12 w-12 text-gray-400 dark:text-gray-500')
+
             <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No images found</h3>
+
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Try adjusting your search terms.</p>
         </div>
 
@@ -144,7 +150,8 @@
                         x-bind:alt="image.title"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                         loading="lazy"
-                    >
+                    />
+
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200"></div>
                     
                     <div 
@@ -179,7 +186,7 @@
                 </button>
 
                 <div class="flex items-center space-x-2">
-                    <template x-for="page in Array.from({length: Math.min(5, lastPage)}, (_, i) => {
+                    <template x-for="page in Array.from({ length: Math.min(5, lastPage) }, (_, i) => {
                         const start = Math.max(1, Math.min(currentPage - 2, lastPage - 4));
                         return start + i;
                     }).filter(p => p <= lastPage)" x-bind:key="page">
@@ -219,16 +226,19 @@
 
         <div x-show="selectedImage" class="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
             <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Selected Image:</h4>
+
             <div class="flex items-center space-x-3">
                 <img 
                     x-bind:src="selectedImage?.preview_url" 
                     x-bind:alt="selectedImage?.title"
                     class="w-16 h-16 object-cover rounded-lg"
                 >
+
                 <div class="flex-1 min-w-0">
                     <p class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate" x-text="selectedImage?.title"></p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 truncate" x-text="selectedImage?.url"></p>
                 </div>
+
                 <button
                     x-on:click="selectedImage = null; state = null"
                     type="button"
