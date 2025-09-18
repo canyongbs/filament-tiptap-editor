@@ -14,6 +14,7 @@ use FilamentTiptapEditor\Actions\EditMediaAction;
 use FilamentTiptapEditor\Actions\GridBuilderAction;
 use FilamentTiptapEditor\Actions\OEmbedAction;
 use FilamentTiptapEditor\Actions\SourceAction;
+use FilamentTiptapEditor\Actions\StockImageAction;
 use FilamentTiptapEditor\Concerns\CanStoreOutput;
 use FilamentTiptapEditor\Concerns\HasCustomActions;
 use FilamentTiptapEditor\Concerns\InteractsWithMedia;
@@ -59,6 +60,8 @@ class TiptapEditor extends Field
     protected bool $shouldShowMergeTagsInBlocksPanel = true;
 
     protected ?string $recordAttribute = null;
+
+    protected string | Closure | null $stockImagesUrl = null;
 
     protected array $gridLayouts = [
         'two-columns',
@@ -187,6 +190,7 @@ class TiptapEditor extends Field
             SourceAction::make(),
             OEmbedAction::make(),
             GridBuilderAction::make(),
+            StockImageAction::make(),
             fn (): Action => $this->getFileAttachmentUrlAction(),
             fn (): Action => $this->getLinkAction(),
             fn (): Action => $this->getMediaAction(),
@@ -679,5 +683,22 @@ class TiptapEditor extends Field
     public function getRecordAttribute(): string
     {
         return $this->recordAttribute ?? $this->getName();
+    }
+
+    public function stockImagesUrl(string | Closure | null $url): static
+    {
+        $this->stockImagesUrl = $url;
+
+        return $this;
+    }
+
+    public function getStockImagesUrl(): ?string
+    {
+        return $this->evaluate($this->stockImagesUrl);
+    }
+
+    public function hasStockImages(): bool
+    {
+        return filled($this->getStockImagesUrl());
     }
 }
