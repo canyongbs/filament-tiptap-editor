@@ -17,6 +17,7 @@ class StockImageAction extends Action
         $this
             ->modalWidth('xl')
             ->modalHeading('Insert stock image')
+            ->modalSubmitActionLabel('Insert')
             ->form(fn (TiptapEditor $component) => [
                 StockImagePicker::make('image')
                     ->required()
