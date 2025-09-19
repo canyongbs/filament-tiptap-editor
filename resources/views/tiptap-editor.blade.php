@@ -95,6 +95,7 @@
                                                 <x-dynamic-component
                                                     component="{{ $tool['button'] }}"
                                                     :state-path="$statePath"
+                                                    :editor="$field"
                                                 />
                                             @elseif ($tool === 'blocks')
                                                 @if ($blocks && $shouldSupportBlocks)
