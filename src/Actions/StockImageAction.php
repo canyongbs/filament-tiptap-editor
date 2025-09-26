@@ -2,7 +2,7 @@
 
 namespace FilamentTiptapEditor\Actions;
 
-use Filament\Forms\Components\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Forms\Contracts\HasForms;
 use FilamentTiptapEditor\Components\StockImagePicker;
 use FilamentTiptapEditor\TiptapEditor;

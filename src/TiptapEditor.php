@@ -2,9 +2,9 @@
 
 namespace FilamentTiptapEditor;
 
+use Filament\Actions\Action;
 use Closure;
 use Exception;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Concerns\HasExtraInputAttributes;
 use Filament\Forms\Components\Concerns\HasPlaceholder;
 use Filament\Forms\Components\Field;
@@ -435,7 +435,7 @@ class TiptapEditor extends Field
     public function getInsertBlockAction(): Action
     {
         return Action::make('insertBlock')
-            ->form(function (TiptapEditor $component, Component $livewire, array $arguments): ?array {
+            ->schema(function (TiptapEditor $component, Component $livewire, array $arguments): ?array {
                 $block = $component->getBlock($arguments['type']);
 
                 if (empty($block->getFormSchema())) {
@@ -511,7 +511,7 @@ class TiptapEditor extends Field
             ->slideOver(function (TiptapEditor $component, Component $livewire, array $arguments): string {
                 return isset($arguments['type']) && $component->getBlock($arguments['type'])->isSlideOver();
             })
-            ->form(function (TiptapEditor $component, Component $livewire, array $arguments): array {
+            ->schema(function (TiptapEditor $component, Component $livewire, array $arguments): array {
                 return $component
                     ->getBlock($arguments['type'])
                     ->getFormSchema();
