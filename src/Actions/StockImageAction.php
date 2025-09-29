@@ -2,8 +2,7 @@
 
 namespace FilamentTiptapEditor\Actions;
 
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Actions\Action;
 use FilamentTiptapEditor\Components\StockImagePicker;
 use FilamentTiptapEditor\TiptapEditor;
 use Livewire\Component;
@@ -24,7 +23,7 @@ class StockImageAction extends Action
                     ->hiddenLabel()
                     ->url($component->getStockImagesUrl()),
             ])
-            ->action(function (TiptapEditor $component, Component & HasForms $livewire, array $data) {
+            ->action(function (TiptapEditor $component, Component $livewire, array $data) {
                 $livewire->dispatch(
                     event: 'insertFromAction',
                     type: 'media',

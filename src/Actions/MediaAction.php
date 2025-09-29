@@ -2,13 +2,12 @@
 
 namespace FilamentTiptapEditor\Actions;
 
-use Filament\Forms\ComponentContainer;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -29,13 +28,13 @@ class MediaAction extends Action
                 'height' => '',
             ])
             ->modalWidth('md')
-            ->mountUsing(function (TiptapEditor $component, ComponentContainer $form, array $arguments) {
+            ->mountUsing(function (TiptapEditor $component, Schema $schema, array $arguments) {
                 $source = $arguments['src'] !== ''
                     ? $component->getDirectory() . Str::of($arguments['src'])
                         ->after($component->getDirectory())
                     : null;
 
-                $form->fill([
+                $schema->fill([
                     'src' => $source,
                     'alt' => $arguments['alt'] ?? '',
                     'title' => $arguments['title'] ?? '',
@@ -94,7 +93,7 @@ class MediaAction extends Action
                     Hidden::make('type')
                         ->default('document'),
                 ];
-            })->action(function (TiptapEditor $component, Component & HasForms $livewire, array $data, array $arguments) {
+            })->action(function (TiptapEditor $component, Component $livewire, array $data, array $arguments) {
                 $id = null;
 
                 if (filled($data['src'])) {

@@ -1,4 +1,5 @@
 @props([
+    'key' => null,
     'statePath' => null,
     'icon' => 'link',
     'label' => trans('filament-tiptap-editor::editor.link.insert_edit'),
@@ -28,7 +29,7 @@
                 button_theme: link.button_theme || null,
             };
     
-            $wire.dispatchFormEvent('tiptap::setLinkContent', '{{ $statePath }}', arguments);
+            $wire.mountAction('filament_tiptap_link', arguments, { schemaComponent: '{{ $key }}' });
         }
     }"
 />

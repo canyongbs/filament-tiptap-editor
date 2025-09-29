@@ -6,9 +6,9 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
+use Filament\Schemas\Components\Group;
 use FilamentTiptapEditor\TiptapBlock;
 use Illuminate\Support\Str;
 
@@ -98,7 +98,7 @@ class VideoBlock extends TiptapBlock
                         $set('height', '480');
                     }
                 })
-                ->columnSpan('full'),
+                ->columnSpanFull(),
             Group::make([
                 TextInput::make('width')
                     ->reactive()

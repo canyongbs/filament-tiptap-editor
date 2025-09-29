@@ -3,7 +3,7 @@
 namespace FilamentTiptapEditor\Concerns;
 
 use Closure;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Actions\Action;
 
 trait HasCustomActions
 {

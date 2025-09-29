@@ -2,12 +2,12 @@
 
 namespace FilamentTiptapEditor\Actions;
 
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Grid;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ViewField;
+use Filament\Schemas\Components\Grid;
 use FilamentTiptapEditor\TiptapEditor;
 
 class GridBuilderAction extends Action
