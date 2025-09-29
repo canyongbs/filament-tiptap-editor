@@ -23,6 +23,10 @@
     }
 }
 
+.tiptap-prosemirror-wrapper {
+    padding: 0 max(1rem, calc((100% - var(--container-5xl)) / 2));
+}
+
 .tiptap-wrapper.tiptap-fullscreen {
     position: fixed;
     top: 0;

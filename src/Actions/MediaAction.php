@@ -3,12 +3,11 @@
 namespace FilamentTiptapEditor\Actions;
 
 use Filament\Actions\Action;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Group;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\Str;
 use Livewire\Component;

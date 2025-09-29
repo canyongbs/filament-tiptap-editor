@@ -2,13 +2,12 @@
 
 namespace FilamentTiptapEditor;
 
-use Filament\Actions\Action;
 use Closure;
 use Exception;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Concerns\HasExtraInputAttributes;
 use Filament\Forms\Components\Concerns\HasPlaceholder;
 use Filament\Forms\Components\Field;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Support\Concerns\HasExtraAlpineAttributes;
 use FilamentTiptapEditor\Actions\EditMediaAction;
 use FilamentTiptapEditor\Actions\GridBuilderAction;
