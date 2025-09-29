@@ -3,6 +3,7 @@
     $bubbleMenuTools = $getBubbleMenuTools();
     $floatingMenuTools = $getFloatingMenuTools();
     $statePath = $getStatePath();
+    $key = $getKey();
     $isDisabled = $isDisabled();
     $blocks = $getBlocks();
     $mergeTags = $getMergeTags();
@@ -35,11 +36,11 @@
                 <div
                     class="tiptap-wrapper relative z-0 rounded-md bg-white focus-within:z-10 focus-within:ring focus-within:ring-primary-500 dark:bg-gray-900"
                     wire:ignore
-                    x-ignore
-                    ax-load="visible"
-                    ax-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('tiptap', 'canyongbs/filament-tiptap-editor') }}"
+                    x-load="visible"
+                    x-load-src="{{ \Filament\Support\Facades\FilamentAsset::getAlpineComponentSrc('tiptap', 'canyongbs/filament-tiptap-editor') }}"
                     x-bind:class="{ 'tiptap-fullscreen': fullScreenMode }"
                     x-data="tiptap({
+                        key: '{{ $key }}',
                         state: $wire.{{ $applyStateBindingModifiers("entangle('{$statePath}')", isOptimisticallyLive: true) }},
                         statePath: '{{ $statePath }}',
                         tools: @js($tools),
@@ -58,10 +59,10 @@
                     x-on:unset-link.window="$event.detail.statePath === '{{ $statePath }}' ? unsetLink() : null"
                     x-on:update-editor-content.window="updateEditorContent($event)"
                     x-on:refresh-tiptap-editors.window="refreshEditorContent()"
-                    x-on:dragged-block.stop="$wire.mountFormComponentAction('{{ $statePath }}', 'insertBlock', {
+                    x-on:dragged-block.stop="$wire.mountAction('insertBlock', {
                         type: $event.detail.type,
                         coordinates: $event.detail.coordinates,
-                    })"
+                    }, { schemaComponent: '{{ $key }}' })"
                     x-on:dragged-merge-tag.stop="insertMergeTag($event)"
                     x-on:insert-block.window="insertBlock($event)"
                     x-on:update-block.window="updateBlock($event)"
@@ -94,6 +95,7 @@
                                             @elseif (is_array($tool))
                                                 <x-dynamic-component
                                                     component="{{ $tool['button'] }}"
+                                                    :key="$key"
                                                     :state-path="$statePath"
                                                     :editor="$field"
                                                 />
@@ -107,6 +109,7 @@
                                             @else
                                                 <x-dynamic-component
                                                     component="filament-tiptap-editor::tools.{{ $tool }}"
+                                                    :key="$key"
                                                     :state-path="$statePath"
                                                     :editor="$field"
                                                 />
@@ -254,7 +257,7 @@
                                     @if ($shouldShowMergeTagsInBlocksPanel)
                                         @foreach ($mergeTags as $mergeTag)
                                             <div
-                                                class="grid-col-1 flex cursor-move items-center gap-2 rounded border bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
+                                                class="grid-col-1 flex cursor-move items-center gap-2 rounded border border-gray-200 bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
                                                 draggable="true"
                                                 x-on:dragstart="$event?.dataTransfer?.setData('mergeTag', @js($mergeTag))"
                                             >
@@ -265,7 +268,7 @@
 
                                     @foreach ($blocks as $block)
                                         <div
-                                            class="grid-col-1 flex cursor-move items-center gap-2 rounded border bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
+                                            class="grid-col-1 flex cursor-move items-center gap-2 rounded border border-gray-200 bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
                                             draggable="true"
                                             x-on:dragstart="$event?.dataTransfer?.setData('block', @js($block->getIdentifier()))"
                                         >

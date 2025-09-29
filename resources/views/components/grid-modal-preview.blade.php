@@ -1,7 +1,7 @@
 @php
-    $mountedFormComponentActionsData = $getLivewire()->mountedFormComponentActionsData;
+    use Illuminate\Support\Arr;
 
-    $data = $mountedFormComponentActionsData[array_key_last($mountedFormComponentActionsData)];
+    $data ??= Arr::last($getLivewire()->mountedActions)['data'];
 @endphp
 
 <div class="rounded-lg bg-gray-100 p-4 dark:bg-gray-950">
@@ -11,13 +11,13 @@
     >
         @if ($data['asymmetric'])
             <div
-                class="rounded-lg border border-dashed border-white bg-gray-300 p-0.5 text-center dark:border-gray-600 dark:bg-gray-800"
+                class="rounded-lg border border-gray-200 border-dashed border-white bg-gray-300 p-0.5 text-center dark:border-gray-600 dark:bg-gray-800"
                 style="grid-column: span {{ $data['asymmetric_left'] }};"
             >
                 <p>1</p>
             </div>
             <div
-                class="rounded-lg border border-dashed border-white bg-gray-300 p-0.5 text-center dark:border-gray-600 dark:bg-gray-800"
+                class="rounded-lg border border-gray-200 border-dashed border-white bg-gray-300 p-0.5 text-center dark:border-gray-600 dark:bg-gray-800"
                 style="grid-column: span {{ $data['asymmetric_right'] }};"
             >
                 <p>1</p>
@@ -25,7 +25,7 @@
         @else
             @foreach (range(1, $data['columns']) as $column)
                 <div
-                    class="rounded-lg border border-dashed border-white bg-gray-300 p-0.5 text-center dark:border-gray-600 dark:bg-gray-800">
+                    class="rounded-lg border border-gray-200 border-dashed border-white bg-gray-300 p-0.5 text-center dark:border-gray-600 dark:bg-gray-800">
                     <p>{{ $column }}</p>
                 </div>
             @endforeach

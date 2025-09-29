@@ -22,7 +22,7 @@
     "php": "^8.2",
     "filament/filament": "^4.0",
     "spatie/laravel-package-tools": "^1.9.2",
-    "ueberdosis/tiptap-php": "^1.1"
+    "ueberdosis/tiptap-php": "^2.0"
   },
   "require-dev": {
     "awcodes/html-faker": "^0.4.0",

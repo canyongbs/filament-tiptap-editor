@@ -152,7 +152,7 @@
                         loading="lazy"
                     />
 
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200"></div>
+                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-200"></div>
                     
                     <div 
                         x-show="isSelected(image)"

@@ -134,58 +134,6 @@ class TiptapEditor extends Field
 
         $this->saveRelationshipsUsing(fn (TiptapEditor $component, Model $record) => $record->wasRecentlyCreated && $component->processImages());
 
-        $this->registerListeners([
-            'tiptap::setGridBuilderContent' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('filament_tiptap_grid', $component, $statePath, $arguments),
-            ],
-            'tiptap::setSourceContent' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('filament_tiptap_source', $component, $statePath, $arguments),
-            ],
-            'tiptap::setOEmbedContent' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('filament_tiptap_oembed', $component, $statePath, $arguments),
-            ],
-            'tiptap::setLinkContent' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('filament_tiptap_link', $component, $statePath, $arguments),
-            ],
-            'tiptap::setMediaContent' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('filament_tiptap_media', $component, $statePath, $arguments),
-            ],
-            'tiptap::editMediaContent' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('filament_tiptap_edit_media', $component, $statePath, $arguments),
-            ],
-            'tiptap::updateBlock' => [
-                fn (
-                    TiptapEditor $component,
-                    string $statePath,
-                    array $arguments
-                ) => $this->getCustomListener('updateBlock', $component, $statePath, $arguments),
-            ],
-        ]);
-
         $this->registerActions([
             SourceAction::make(),
             OEmbedAction::make(),
@@ -203,7 +151,7 @@ class TiptapEditor extends Field
     public function getFileAttachmentUrlAction(): Action
     {
         return Action::make('getFileAttachmentUrl')
-            ->action(function (TiptapEditor $component, Component & HasForms $livewire, array $arguments): ?string {
+            ->action(function (TiptapEditor $component, Component $livewire, array $arguments): ?string {
                 $livewire->skipRender();
 
                 $file = $livewire->getFormComponentFileAttachment("{$component->getStatePath()}.{$arguments['fileKey']}");
@@ -214,17 +162,6 @@ class TiptapEditor extends Field
 
                 return $file->temporaryUrl();
             });
-    }
-
-    public function getCustomListener(string $name, TiptapEditor $component, string $statePath, array $arguments = []): void
-    {
-        if ($this->verifyListener($component, $statePath)) {
-            return;
-        }
-
-        $component
-            ->getLivewire()
-            ->mountFormComponentAction($statePath, $name, $arguments);
     }
 
     public function generateImageUrls(array $document, ?Collection $images = null): array
@@ -613,11 +550,6 @@ class TiptapEditor extends Field
             ->transform(function ($ext) {
                 return $ext['source'];
             })->toArray();
-    }
-
-    public function verifyListener(TiptapEditor $component, string $statePath): bool
-    {
-        return $component->isDisabled() || $statePath !== $component->getStatePath();
     }
 
     public function shouldSupportBlocks(): bool

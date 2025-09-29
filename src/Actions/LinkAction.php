@@ -3,12 +3,12 @@
 namespace FilamentTiptapEditor\Actions;
 
 use Filament\Actions\Action;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\TiptapEditor;
 use Illuminate\Support\HtmlString;
 
@@ -48,7 +48,7 @@ class LinkAction extends Action
 
                                 return "https://{$state}";
                             })
-                            ->columnSpan('full')
+                            ->columnSpanFull()
                             ->required()
                             // ->requiredWithout('id')
                             ->validationAttribute('URL'),
@@ -65,17 +65,17 @@ class LinkAction extends Action
                         // TextInput::make('hreflang')
                         //     ->label(trans('filament-tiptap-editor::link-modal.labels.language')),
                         // TextInput::make('rel')
-                        //     ->columnSpan('full'),
+                        //     ->columnSpanFull(),
                         // TextInput::make('referrerpolicy')
                         //     ->label(trans('filament-tiptap-editor::link-modal.labels.referrer_policy'))
-                        //     ->columnSpan('full'),
+                        //     ->columnSpanFull(),
                         // Toggle::make('as_button')
                         //     ->label(trans('filament-tiptap-editor::link-modal.labels.as_button'))
                         //     ->reactive()
                         //     ->hidden(config('filament-tiptap-editor.disable_link_as_button'))
                         //     ->dehydratedWhenHidden(),
                         // Radio::make('button_theme')
-                        //     ->columnSpan('full')
+                        //     ->columnSpanFull()
                         //     ->columns(2)
                         //     ->visible(fn ($get) => $get('as_button'))
                         //     ->options([

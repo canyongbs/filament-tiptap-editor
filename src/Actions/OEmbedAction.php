@@ -2,14 +2,14 @@
 
 namespace FilamentTiptapEditor\Actions;
 
-use Filament\Actions\Action;
-use Filament\Schemas\Components\Group;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
+use Filament\Schemas\Components\Group;
 use FilamentTiptapEditor\TiptapEditor;
 
 class OEmbedAction extends Action
@@ -96,7 +96,7 @@ class OEmbedAction extends Action
                             $set('height', '480');
                         }
                     })
-                    ->columnSpan('full'),
+                    ->columnSpanFull(),
                 Group::make([
                     TextInput::make('width')
                         ->reactive()

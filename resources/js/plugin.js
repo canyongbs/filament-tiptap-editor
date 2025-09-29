@@ -160,6 +160,7 @@ Livewire.on('updateBlockFromAction', (event) => {
 export default function tiptap({
     state,
     statePath,
+    key,
     tools = [],
     disabled = false,
     locale = 'en',
@@ -205,7 +206,7 @@ export default function tiptap({
                 IdExtension,
                 LocalFilesExtension.configure({
                     getFileAttachmentUrl: (fileKey) =>
-                        this.$wire.mountFormComponentAction(statePath, 'getFileAttachmentUrl', { fileKey }),
+                        this.$wire.mountAction('getFileAttachmentUrl', { fileKey }, { schemaComponent: key }),
                     statePath,
                     upload: this.$wire.upload,
                     uploadingMessage,
@@ -664,7 +665,7 @@ export default function tiptap({
         openBlockSettings(event) {
             if (event.detail.statePath !== this.statePath) return;
 
-            this.$wire.dispatchFormEvent('tiptap::updateBlock', this.statePath, event.detail);
+            this.$wire.mountAction('updateBlock', event.detail, { schemaComponent: key });
         },
         updateBlock(event) {
             if (event.detail.statePath !== this.statePath) return;
