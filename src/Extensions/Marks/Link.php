@@ -8,14 +8,17 @@ class Link extends BaseLink
 {
     public function addOptions(): array
     {
-        return [
-            'openOnClick' => true,
-            'linkOnPaste' => true,
-            'autoLink' => true,
-            'protocols' => [],
-            'HTMLAttributes' => [],
-            'validate' => 'undefined',
-        ];
+        return array_merge(
+            parent::addOptions(),
+            [
+                'openOnClick' => true,
+                'linkOnPaste' => true,
+                'autoLink' => true,
+                'protocols' => [],
+                'HTMLAttributes' => [],
+                'validate' => 'undefined',
+            ]
+        );
     }
 
     public function addAttributes(): array
