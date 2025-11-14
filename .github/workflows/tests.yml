@@ -12,6 +12,7 @@ on:
       - 'phpunit.xml.dist'
       - 'composer.json'
       - 'composer.lock'
+  push:
 
 jobs:
   test:
