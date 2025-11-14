@@ -516,18 +516,68 @@ class TiptapEditor extends Field
 
     public function getBlock(string $identifier): TiptapBlock
     {
-        return $this->getBlocks()[$identifier];
+        return $this->getFlattenedBlocks()[$identifier];
     }
 
     public function getBlocks(): array
     {
         $blocks = $this->evaluate($this->blocks);
 
+        if ($this->hasBlockGroups()) {
+            return collect($blocks)->map(function ($groupBlocks) {
+                return collect($groupBlocks)->mapWithKeys(function ($block) {
+                    $b = app($block);
+
+                    return [$b->getIdentifier() => $b];
+                })->toArray();
+            })->toArray();
+        }
+
         return collect($blocks)->mapWithKeys(function ($block, $key) {
             $b = app($block);
 
             return [$b->getIdentifier() => $b];
         })->toArray();
+    }
+
+    public function hasBlockGroups(): bool
+    {
+        $blocks = $this->evaluate($this->blocks);
+
+        if (empty($blocks)) {
+            return false;
+        }
+
+        $firstValue = reset($blocks);
+        $firstKey = key($blocks);
+
+        return is_array($firstValue) && ! is_numeric($firstKey);
+    }
+
+    public function getBlockGroups(): array
+    {
+        if (! $this->hasBlockGroups()) {
+            return [];
+        }
+
+        return $this->getBlocks();
+    }
+
+    public function getFlattenedBlocks(): array
+    {
+        $blocks = $this->getBlocks();
+
+        if ($this->hasBlockGroups()) {
+            $flattened = [];
+
+            foreach ($blocks as $groupBlocks) {
+                $flattened = [...$flattened, ...$groupBlocks];
+            }
+
+            return $flattened;
+        }
+
+        return $blocks;
     }
 
     public function getTools(): array

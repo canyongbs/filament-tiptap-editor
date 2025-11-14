@@ -1,5 +1,5 @@
 @props([
-    'key' => $key,
+    'key' => null,
     'statePath' => null,
     'icon' => 'media',
 ])
