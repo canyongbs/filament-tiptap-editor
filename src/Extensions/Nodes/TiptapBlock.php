@@ -61,7 +61,7 @@ class TiptapBlock extends Node
 
         $firstValue = reset($customBlocks);
         $firstKey = key($customBlocks);
-        $isGrouped = is_array($firstValue) && !is_numeric($firstKey);
+        $isGrouped = is_array($firstValue) && ! is_numeric($firstKey);
 
         if ($isGrouped) {
             $flattened = [];

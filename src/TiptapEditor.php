@@ -527,6 +527,7 @@ class TiptapEditor extends Field
             return collect($blocks)->map(function ($groupBlocks) {
                 return collect($groupBlocks)->mapWithKeys(function ($block) {
                     $b = app($block);
+
                     return [$b->getIdentifier() => $b];
                 })->toArray();
             })->toArray();
@@ -549,13 +550,13 @@ class TiptapEditor extends Field
 
         $firstValue = reset($blocks);
         $firstKey = key($blocks);
-        
-        return is_array($firstValue) && !is_numeric($firstKey);
+
+        return is_array($firstValue) && ! is_numeric($firstKey);
     }
 
     public function getBlockGroups(): array
     {
-        if (!$this->hasBlockGroups()) {
+        if (! $this->hasBlockGroups()) {
             return [];
         }
 

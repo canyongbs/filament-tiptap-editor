@@ -1,7 +1,7 @@
 <?php
 
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use FilamentTiptapEditor\Enums\TiptapOutput;
 use FilamentTiptapEditor\Tests\Fixtures\Livewire as LivewireFixture;
 use FilamentTiptapEditor\Tests\Models\Page;
@@ -84,9 +84,9 @@ it('can create null record', function () {
 
 class TestComponentWithForm extends LivewireFixture
 {
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->statePath('data')
             ->model(Page::class)
             ->schema([
