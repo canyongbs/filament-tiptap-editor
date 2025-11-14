@@ -56,7 +56,24 @@ class TiptapBlock extends Node
         $customBlocks = $this->options['blocks'] ?? null;
 
         if (blank($customBlocks)) {
-            return TiptapEditor::make('get_blocks')->getBlocks();
+            return TiptapEditor::make('get_blocks')->getFlattenedBlocks();
+        }
+
+        $firstValue = reset($customBlocks);
+        $firstKey = key($customBlocks);
+        $isGrouped = is_array($firstValue) && !is_numeric($firstKey);
+
+        if ($isGrouped) {
+            $flattened = [];
+
+            foreach ($customBlocks as $groupBlocks) {
+                foreach ($groupBlocks as $block) {
+                    $blockInstance = app($block);
+                    $flattened = [...$flattened, $blockInstance->getIdentifier() => $blockInstance];
+                }
+            }
+
+            return $flattened;
         }
 
         return collect($customBlocks)

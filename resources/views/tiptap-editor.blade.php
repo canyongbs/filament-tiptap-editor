@@ -104,6 +104,7 @@
                                                     <x-filament-tiptap-editor::tools.blocks
                                                         :blocks="$blocks"
                                                         :state-path="$statePath"
+                                                        :editor="$field"
                                                     />
                                                 @endif
                                             @else
@@ -139,6 +140,9 @@
                                     <x-filament-tiptap-editor::menus.default-bubble-menu
                                         :state-path="$statePath"
                                         :tools="$bubbleMenuTools"
+                                        :blocks="$blocks"
+                                        :should-support-blocks="$shouldSupportBlocks"
+                                        :editor="$field"
                                     />
                                     <x-filament-tiptap-editor::menus.link-bubble-menu
                                         :state-path="$statePath"
@@ -266,22 +270,51 @@
                                         @endforeach
                                     @endif
 
-                                    @foreach ($blocks as $block)
-                                        <div
-                                            class="grid-col-1 flex cursor-move items-center gap-2 rounded border border-gray-200 bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
-                                            draggable="true"
-                                            x-on:dragstart="$event?.dataTransfer?.setData('block', @js($block->getIdentifier()))"
-                                        >
-                                            @if ($block->getIcon())
-                                                <x-filament::icon
-                                                    class="h-5 w-5"
-                                                    :icon="$block->getIcon()"
-                                                />
+                                    @if ($hasBlockGroups())
+                                        @foreach ($getBlockGroups() as $groupName => $groupBlocks)
+                                            @if (count($getBlockGroups()) > 1)
+                                                <div class="sticky top-0 z-10 -mx-2 bg-gray-50 px-2 py-1.5 text-xs font-semibold text-gray-700 backdrop-blur-sm dark:bg-gray-950/20 dark:text-gray-300">
+                                                    {{ $groupName }}
+                                                </div>
                                             @endif
+                                            
+                                            <div class="space-y-1">
+                                                @foreach ($groupBlocks as $key => $block)
+                                                    <div
+                                                        class="grid-col-1 flex cursor-move items-center gap-2 rounded border border-gray-200 bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
+                                                        draggable="true"
+                                                        x-on:dragstart="$event?.dataTransfer?.setData('block', @js($block->getIdentifier()))"
+                                                    >
+                                                        @if ($block->getIcon())
+                                                            <x-filament::icon
+                                                                class="h-5 w-5"
+                                                                :icon="$block->getIcon()"
+                                                            />
+                                                        @endif
 
-                                            {{ $block->getLabel() }}
-                                        </div>
-                                    @endforeach
+                                                        {{ $block->getLabel() }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        @foreach ($blocks as $block)
+                                            <div
+                                                class="grid-col-1 flex cursor-move items-center gap-2 rounded border border-gray-200 bg-white px-3 py-2 text-xs dark:border-gray-700 dark:bg-gray-800"
+                                                draggable="true"
+                                                x-on:dragstart="$event?.dataTransfer?.setData('block', @js($block->getIdentifier()))"
+                                            >
+                                                @if ($block->getIcon())
+                                                    <x-filament::icon
+                                                        class="h-5 w-5"
+                                                        :icon="$block->getIcon()"
+                                                    />
+                                                @endif
+
+                                                {{ $block->getLabel() }}
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         @endif
