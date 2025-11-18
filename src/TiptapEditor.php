@@ -325,6 +325,13 @@ class TiptapEditor extends Field
         foreach ($content as $blockIndex => $block) {
             if (($block['type'] ?? null) === 'tiptapBlock') {
                 $instance = $this->getBlock($block['attrs']['type'] ?? '');
+
+                if (! $instance) {
+                    unset($content[$blockIndex]);
+
+                    continue;
+                }
+
                 $orderedAttrs = [
                     'preview' => $instance->getPreview($block['attrs']['data'] ?? [], $this),
                     'statePath' => $this->getStatePath(),
@@ -514,9 +521,9 @@ class TiptapEditor extends Field
         return $this->shouldDisableStylesheet ?? config('filament-tiptap-editor.disable_stylesheet');
     }
 
-    public function getBlock(string $identifier): TiptapBlock
+    public function getBlock(string $identifier): ?TiptapBlock
     {
-        return $this->getFlattenedBlocks()[$identifier];
+        return $this->getFlattenedBlocks()[$identifier] ?? null;
     }
 
     public function getBlocks(): array
