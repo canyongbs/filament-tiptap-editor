@@ -1,6 +1,8 @@
 @props([
     'statePath' => null,
     'tools' => [],
+    'blocks' => [],
+    'shouldSupportBlocks' => false,
     'editor' => null,
 ])
 
