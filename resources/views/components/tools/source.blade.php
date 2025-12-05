@@ -1,4 +1,5 @@
 @props([
+    'key' => null,
     'statePath' => null,
 ])
 
@@ -8,7 +9,7 @@
     icon="source"
     x-data="{
         openModal() {
-            $wire.dispatchFormEvent('tiptap::setSourceContent', '{{ $statePath }}', { html: this.editor().getHTML() });
+            $wire.dispatchFormEvent('tiptap::setSourceContent', '{{ $statePath }}', { html: this.editor().getHTML() }, { schemaComponent: '{{ $key }}' });
         }
     }"
 />
