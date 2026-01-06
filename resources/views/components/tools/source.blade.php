@@ -9,7 +9,7 @@
     icon="source"
     x-data="{
         openModal() {
-            $wire.mountAction(,'filament_tiptap_source', { html: this.editor().getHTML() }, { schemaComponent: '{{ $key }}' });
+            $wire.mountAction('filament_tiptap_source', { html: this.editor().getHTML() }, { schemaComponent: '{{ $key }}' });
         }
     }"
 />

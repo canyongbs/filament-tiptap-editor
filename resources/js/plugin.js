@@ -388,6 +388,31 @@ export default function tiptap({
                             }
                         });
                     },
+                    transformPastedHTML(html) {
+                        const doc = new DOMParser().parseFromString(html, 'text/html')
+
+                        doc.querySelectorAll('[style]').forEach(el => {
+                            const style = el.getAttribute('style')
+
+                            if (!style) {
+                                return
+                            }
+
+                            const cleaned = style
+                                .split(';')
+                                .map(rule => rule.trim())
+                                .filter(rule => !rule.toLowerCase().startsWith('font-family'))
+                                .join('; ')
+
+                            if (cleaned.length > 0) {
+                                el.setAttribute('style', cleaned)
+                            } else {
+                                el.removeAttribute('style')
+                            }
+                        })
+
+                        return doc.body.innerHTML
+                    },
                 },
                 onCreate({ editor }) {
                     if (_this.$store.previous && editor.commands.getStatePath() === _this.$store.previous.statePath) {
