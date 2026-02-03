@@ -307,19 +307,6 @@ class TiptapConverter
                     return $node?->text ?? null;
                 })->implode(' '))->kebab()->toString();
             }
-
-            array_unshift($node->content, (object) [
-                'type' => 'text',
-                'text' => '#',
-                'marks' => [
-                    [
-                        'type' => 'link',
-                        'attrs' => [
-                            'href' => '#' . $node->attrs->id,
-                        ],
-                    ],
-                ],
-            ]);
         });
 
         return $editor;
