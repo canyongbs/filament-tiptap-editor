@@ -110,7 +110,7 @@ class TiptapEditor extends Field
             }
 
             $component->state($component->processImages($state));
-        });
+        }, shouldUpdateValidatedStateAfter: true);
 
         $this->dehydrateStateUsing(function (TiptapEditor $component, string | array | null $state): string | array | null {
             if (! $state) {
@@ -153,7 +153,7 @@ class TiptapEditor extends Field
             ->action(function (TiptapEditor $component, Component $livewire, array $arguments): ?string {
                 $livewire->skipRender();
 
-                $file = $livewire->getFormComponentFileAttachment("{$component->getStatePath()}.{$arguments['fileKey']}");
+                $file = data_get($livewire, "componentFileAttachments.{$component->getStatePath()}.{$arguments['fileKey']}");
 
                 if (! $file) {
                     return null;
