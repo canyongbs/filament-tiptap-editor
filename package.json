@@ -56,7 +56,7 @@
     "@tiptap/pm": "^2.1.12",
     "@tiptap/suggestion": "^2.1.12",
     "alpinejs": "^3.10.5",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.1",
     "highlight.js": "^11.5.0",
     "lodash": "^4.18.1",
     "lowlight": "^2.9.0",
